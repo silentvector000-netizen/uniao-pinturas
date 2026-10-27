@@ -6,7 +6,7 @@
   // ---------- Imagens centralizadas ----------
   const IMAGES = {
     hero: "/images/hero.jpg",
-    servicos: "/images/servicos.jpg",
+    servicos: "/images/serviços.jpg",
     processo: "/images/processo.jpg",
     sobre: "/images/sobre.jpg",
     cta: "/images/cta.jpg"

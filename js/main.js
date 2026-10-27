@@ -3,7 +3,6 @@
 (function () {
   "use strict";
 
-  // ---------- Imagens centralizadas ----------
   const IMAGES = {
     hero: "/images/hero.jpg",
     servicos: "/images/serviços.jpg",
@@ -12,11 +11,13 @@
     cta: "/images/cta.jpg"
   };
 
-  // ---------- Fallback de imagens ----------
   function setupImageFallbacks() {
-    document.querySelectorAll("[data-fallback]").forEach(function (img) {
+    document.querySelectorAll("[data-fallback]").forEach(function (el) {
+      const img = el.tagName === "IMG" ? el : el.querySelector("img");
+      if (!img) return;
+
       img.addEventListener("error", function () {
-        const parent = img.closest(".hero__media, .services__media, .process__media, .about__media, .cta__bg");
+        const parent = el.closest(".hero__media, .services__banner, .process__media, .about__media, .cta__bg") || el;
         if (parent) {
           parent.classList.add("is-fallback");
         }
@@ -25,7 +26,6 @@
     });
   }
 
-  // ---------- Header scroll ----------
   function setupHeader() {
     const header = document.getElementById("header");
     if (!header) return;
@@ -42,7 +42,6 @@
     onScroll();
   }
 
-  // ---------- Menu mobile ----------
   function setupMobileMenu() {
     const toggle = document.getElementById("menu-toggle");
     const nav = document.getElementById("nav");
@@ -56,7 +55,6 @@
       document.body.style.overflow = isOpen ? "" : "hidden";
     });
 
-    // Fecha ao clicar em link
     nav.querySelectorAll("a").forEach(function (link) {
       link.addEventListener("click", function () {
         toggle.setAttribute("aria-expanded", "false");
@@ -66,7 +64,6 @@
       });
     });
 
-    // Fecha com Escape
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && nav.classList.contains("is-open")) {
         toggle.setAttribute("aria-expanded", "false");
@@ -78,7 +75,6 @@
     });
   }
 
-  // ---------- FAQ accordion ----------
   function setupFAQ() {
     document.querySelectorAll(".faq__question").forEach(function (btn) {
       btn.addEventListener("click", function () {
@@ -86,14 +82,12 @@
         const answerId = btn.getAttribute("aria-controls");
         const answer = document.getElementById(answerId);
 
-        // Fecha todos
         document.querySelectorAll(".faq__question").forEach(function (other) {
           other.setAttribute("aria-expanded", "false");
           const otherAnswer = document.getElementById(other.getAttribute("aria-controls"));
           if (otherAnswer) otherAnswer.hidden = true;
         });
 
-        // Abre o clicado se estava fechado
         if (!expanded && answer) {
           btn.setAttribute("aria-expanded", "true");
           answer.hidden = false;
@@ -102,7 +96,6 @@
     });
   }
 
-  // ---------- Scroll reveal ----------
   function setupReveal() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       document.querySelectorAll(".reveal").forEach(function (el) {
@@ -128,7 +121,6 @@
     });
   }
 
-  // ---------- Linha do tempo ----------
   function setupTimeline() {
     const steps = document.querySelector(".process__steps");
     if (!steps) return;
@@ -153,7 +145,6 @@
     observer.observe(steps);
   }
 
-  // ---------- Ano no rodapé ----------
   function setupYear() {
     const el = document.getElementById("year");
     if (el) {
@@ -161,7 +152,6 @@
     }
   }
 
-  // ---------- Init ----------
   document.addEventListener("DOMContentLoaded", function () {
     setupImageFallbacks();
     setupHeader();

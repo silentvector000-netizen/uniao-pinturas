@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Substitua pelo seu domínio após publicar na Vercel
+# Sitemap: https://SEU-DOMINIO.vercel.app/sitemap.xml
